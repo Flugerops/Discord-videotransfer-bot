@@ -10,7 +10,12 @@ load_dotenv()
 print(getenv("TOKEN"))
 TOKEN = getenv("TOKEN")
 
-bot = commands.Bot(command_prefix='!')
+intents = discord.Intents.default()
+intents.all()
+intents.messages = True
+
+bot = commands.Bot(command_prefix='!', intents=intents)
+
 
 @bot.event
 async def on_ready():
@@ -23,6 +28,10 @@ async def tiktok_video(ctx, tiktok_url):
         await ctx.send(f'TikTok Video: {video_url}')
     except Exception as e:
         await ctx.send(f'Error: {e}')
+
+@bot.command(name='hello')
+async def hello(ctx):
+    await ctx.send('Я сын дерьма')
 
 def get_tiktok_video_url(tiktok_url):
     headers = {
